@@ -190,6 +190,20 @@ const getIsPostBookmarked = async (req, res, next) => {
     }
 }
 
+const getBookmarkedPosts = async (req, res, next) => {
+    try {
+        const userId = req.userId;
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new CustomError(StatusCodes.NOT_FOUND, "user does not exist.");
+        }
+        res.status(StatusCodes.OK).json(user.savedPosts);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
 module.exports = {
     postCreatePost,
     putUpdatePost,
@@ -199,5 +213,6 @@ module.exports = {
     getAllPosts,
     getTimelinePosts,
     putSavePost,
-    getIsPostBookmarked
+    getIsPostBookmarked,
+    getBookmarkedPosts
 }

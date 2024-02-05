@@ -10,7 +10,8 @@ const {
     getAllPosts,
     getTimelinePosts,
     putSavePost,
-    getIsPostBookmarked
+    getIsPostBookmarked,
+    getBookmarkedPosts
 } = require("../controllers/Post.controller");
 const verifyAccessToken = require("../middlewares/VerifyAccessToken.middleware");
 
@@ -55,6 +56,9 @@ postRouter.get("/timeline", verifyAccessToken, getTimelinePosts);
 postRouter.put("/bookmark/:postId", verifyAccessToken, putSavePost);
 
 // route to query if a post id bookmarked or not
-postRouter.get("/isBookmarked", verifyAccessToken, getIsPostBookmarked)
+postRouter.get("/isBookmarked", verifyAccessToken, getIsPostBookmarked);
+
+// route to get bookmarked posts
+postRouter.get("/bookmarkedPosts", verifyAccessToken, getBookmarkedPosts);
 
 module.exports = postRouter;
