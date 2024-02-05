@@ -197,6 +197,7 @@ const getBookmarkedPosts = async (req, res, next) => {
         if (!user) {
             throw new CustomError(StatusCodes.NOT_FOUND, "user does not exist.");
         }
+        await user.populate("savedPosts");
         res.status(StatusCodes.OK).json(user.savedPosts);
     } catch (error) {
         console.log(error);
