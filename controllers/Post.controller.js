@@ -171,6 +171,25 @@ const putSavePost = async (req, res, next) => {
     }
 }
 
+const getIsPostBookmarked = async (req, res, next) => {
+    try {
+        const userId = req.userId;
+        const postId = req.query.postId;
+        const user = await User.findById(userId);
+        if (!userId) {
+            throw new CustomError(StatusCodes.NOT_FOUND, "user not found.");
+        }
+        if (user.savedPosts.includes(postId)) {
+            res.sendStatus(StatusCodes.OK);
+        } else {
+            res.sendStatus(StatusCodes.NOT_FOUND);
+        }
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
 module.exports = {
     postCreatePost,
     putUpdatePost,
@@ -179,5 +198,6 @@ module.exports = {
     getPostById,
     getAllPosts,
     getTimelinePosts,
-    putSavePost
+    putSavePost,
+    getIsPostBookmarked
 }
