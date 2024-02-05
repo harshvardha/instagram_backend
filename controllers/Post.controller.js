@@ -174,7 +174,7 @@ const putSavePost = async (req, res, next) => {
 const getIsPostBookmarked = async (req, res, next) => {
     try {
         const userId = req.userId;
-        const postId = req.query.postId;
+        const { postId } = req.query;
         const user = await User.findById(userId);
         if (!userId) {
             throw new CustomError(StatusCodes.NOT_FOUND, "user not found.");
